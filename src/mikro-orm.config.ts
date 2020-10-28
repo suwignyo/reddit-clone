@@ -2,6 +2,7 @@ import { Post } from "./entities/Post";
 import { production } from "./constants";
 import { MikroORM } from "@mikro-orm/core";
 import path from "path";
+import { User } from "./entities/User";
 
 export default {
   migrations: {
@@ -10,7 +11,7 @@ export default {
       pattern: /^[\w-]+\d+\.[tj]s$/,
     },
   },
-  entities: [Post],
+  entities: [Post, User],
   dbName: "reddit-test",
   type: "postgresql",
   debug: !production,
