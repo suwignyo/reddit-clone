@@ -1,5 +1,5 @@
 import { Post } from "./entities/Post";
-import { production } from "./constants";
+import { production } from "./utils/constants";
 import { MikroORM } from "@mikro-orm/core";
 import path from "path";
 import { User } from "./entities/User";
