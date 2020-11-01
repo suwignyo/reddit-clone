@@ -22,3 +22,7 @@ up to @1:41:45
   - unsign/decrypt cooie to get from randomstringafdsfjaf' to session:'randomstring' so it can get {userId: 1}
 
 up to @2:08:40
+
+- setup next js app with chakra ui
+
+up to @2:14:21
