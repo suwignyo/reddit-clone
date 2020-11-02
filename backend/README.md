@@ -26,3 +26,15 @@ up to @2:08:40
 - setup next js app with chakra ui
 
 up to @2:14:21
+
+- setup a form with chakra ui and formik, setting up some components
+
+up to @2:32:36
+
+- skipLibCheck on tsConfig https://stackoverflow.com/questions/52311779/usage-of-the-typescript-compiler-argument-skiplibcheck
+- getting started with urql
+- how to avoid cors issue by adding cors middleware
+- storing graphql generated file src/graphql/\*_/_.graphql
+- learn to generate graphql types file
+
+up to @3:10:01

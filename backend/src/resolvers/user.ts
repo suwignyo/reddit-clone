@@ -11,6 +11,7 @@ import {
 } from "type-graphql";
 import argon2 from "argon2";
 import { User } from "../entities/User";
+import { EntityManager } from "@mikro-orm/postgresql";
 
 @InputType()
 class UsernamePasswordInput {
@@ -39,16 +40,14 @@ class UserResponse {
 @Resolver()
 export class UserResolver {
   @Query(() => User, { nullable: true })
-  async me(
-    @Ctx() { req, em }: MyContext
-  ) {
-    console.log('session: ', req.session)
+  async me(@Ctx() { req, em }: MyContext) {
+    console.log("session: ", req.session);
     // you are not logged in
     if (!req.session.userId) {
-      return null
+      return null;
     }
-    const user = await em.findOne(User, { id: req.session.userId })
-    return user
+    const user = await em.findOne(User, { id: req.session.userId });
+    return user;
   }
 
   @Mutation(() => UserResponse)
@@ -70,20 +69,30 @@ export class UserResolver {
       return {
         errors: [
           {
-            field: "username",
+            field: "password",
             message: "length must be greater thanaa 2",
           },
         ],
       };
     }
     const hashedPassword = await argon2.hash(options.password);
-    const user = em.create(User, {
-      username: options.username,
-      password: hashedPassword,
-    });
+    let user;
     try {
-      await em.persistAndFlush(user);
+      const result = await (em as EntityManager)
+        .createQueryBuilder(User)
+        .getKnexQuery()
+        .insert({
+          username: options.username,
+          password: hashedPassword,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })
+        .returning("*");
+      user = result[0];
+      console.log(user, "user");
+      // await em.persistAndFlush(user);
     } catch (err) {
+      console.log(err, "err");
       if (err.code === "23505") {
         // duplicate user name error code
         return {
@@ -100,7 +109,7 @@ export class UserResolver {
     // store user id session
     // this will set a cookie on the user
     // keep them logged in
-    req.session.userId = user.id
+    req.session.userId = user.id;
 
     return { user };
   }
@@ -133,7 +142,7 @@ export class UserResolver {
       };
     }
 
-    req.session.userId = user.id
+    req.session.userId = user.id;
 
     return { user };
   }

@@ -1,55 +1,62 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
-import { Button, FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/core'
-import { Container } from '../components/Container'
-import { InputField } from '../components'
+import React from "react";
+import { Formik, Form } from "formik";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/core";
+import { InputField, Container } from "../components";
+import { useRegisterMutation } from "../generated/graphql";
+import { toErrorMap } from "../utils";
+import { useRouter } from "next/router";
 
+interface registerProps {}
 
-interface registerProps {
-
-}
-
-function validateName(value) {
-  let error
-  if (!value) {
-    error = "Name is required"
-  } else if (value !== "Naruto") {
-    error = "Jeez! You're not a fan 😱"
-  }
-  return error
-}
-
-
-export const Register: React.FC<registerProps> = ({ }) => {
+export const Register: React.FC<registerProps> = ({}) => {
+  const router = useRouter();
+  const [{}, register] = useRegisterMutation();
   return (
     <Container>
       <Formik
-        initialValues={{ username: "Sasuke" }}
-        onSubmit={(values, actions) => {
-          console.log(values, 'values')
+        initialValues={{ username: "", password: "" }}
+        onSubmit={async (values, { setErrors }) => {
+          const response = await register(values);
+          console.log(response);
+          if (response.data?.register.errors) {
+            setErrors(toErrorMap(response.data.register.errors));
+          } else if (response.data?.register.user) {
+            router.push("/");
+          }
         }}
       >
-        {({ values, handleChange, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form>
             <InputField
               name="username"
               placeholder="username"
               label="Username"
-            >
-            </InputField>
+            ></InputField>
             <InputField
               name="password"
               placeholder="password"
               label="Password"
               type="password"
+            ></InputField>
+            <Button
+              mt={4}
+              type="submit"
+              variantColor="teal"
+              isLoading={isSubmitting}
             >
-            </InputField>
-            <Button mt={4} type="submit" variantColor="teal" isLoading={isSubmitting}>Submit</Button>
+              Submit
+            </Button>
           </Form>
         )}
       </Formik>
     </Container>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

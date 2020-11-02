@@ -3,12 +3,10 @@ import React from "react";
 
 interface ContainerProps {
   variant?: "small" | "regular";
-  // children: React.ReactNode
 }
 
 
-
-export function Container({ children, variant }: ContainerProps) {
+export const Container: React.FC<ContainerProps> = ({ variant, children }) => {
   return (
     <Box
       mt={8}
