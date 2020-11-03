@@ -89,10 +89,9 @@ export class UserResolver {
         })
         .returning("*");
       user = result[0];
-      console.log(user, "user");
       // await em.persistAndFlush(user);
     } catch (err) {
-      console.log(err, "err");
+      // console.log(err, "err");
       if (err.code === "23505") {
         // duplicate user name error code
         return {
@@ -104,7 +103,7 @@ export class UserResolver {
           ],
         };
       }
-      console.log("message: ", err.message);
+      // console.log("message: ", err.message);
     }
     // store user id session
     // this will set a cookie on the user
@@ -141,7 +140,7 @@ export class UserResolver {
         ],
       };
     }
-
+    console.log(req.session, "req");
     req.session.userId = user.id;
 
     return { user };

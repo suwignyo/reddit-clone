@@ -6,14 +6,14 @@ import {
   List,
   ListIcon,
   ListItem,
-} from '@chakra-ui/core'
-import { DarkModeSwitch } from '../components'
+} from "@chakra-ui/core";
+import { DarkModeSwitch, NavBar } from "../components";
 
 const Index = () => (
-  <div>Hello world
+  <div>
+    <NavBar></NavBar>
     <DarkModeSwitch />
-
   </div>
-)
+);
 
-export default Index
+export default Index;

@@ -38,3 +38,7 @@ up to @2:32:36
 - learn to generate graphql types file
 
 up to @3:10:01
+
+- navbar
+
+up to @3:26:01

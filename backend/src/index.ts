@@ -39,7 +39,7 @@ const main = async () => {
         secure: production, //cookie only works in https
       },
       saveUninitialized: false,
-      secret: "keyboard cat",
+      secret: "seomesecret",
       resave: false,
     })
   );
