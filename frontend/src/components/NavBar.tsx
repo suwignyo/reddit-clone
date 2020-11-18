@@ -30,16 +30,23 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
       </Flex>
     );
   }
+
   return (
     <Flex bg="tomato" p={4}>
       <Box ml="auto">
-        <NextLink href="/login">
-          <Link mr="4">Login</Link>
-        </NextLink>
+        {!!body ? (
+          body
+        ) : (
+          <>
+            <NextLink href="/login">
+              <Link mr="4">Login</Link>
+            </NextLink>
 
-        <NextLink href="/login">
-          <Link>Register</Link>
-        </NextLink>
+            <NextLink href="/register">
+              <Link>Register</Link>
+            </NextLink>
+          </>
+        )}
       </Box>
     </Flex>
   );

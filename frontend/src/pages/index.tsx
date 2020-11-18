@@ -12,7 +12,7 @@ import { DarkModeSwitch, NavBar } from "../components";
 const Index = () => (
   <div>
     <NavBar></NavBar>
-    <DarkModeSwitch />
+    {/* <DarkModeSwitch /> */}
   </div>
 );
 

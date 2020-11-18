@@ -41,7 +41,8 @@ class UserResponse {
 export class UserResolver {
   @Query(() => User, { nullable: true })
   async me(@Ctx() { req, em }: MyContext) {
-    console.log("session: ", req.session);
+    // console.log("session: ", req.session);
+    // console.log("cookie: ", req.cookies);
     // you are not logged in
     if (!req.session.userId) {
       return null;
@@ -55,6 +56,7 @@ export class UserResolver {
     @Arg("options") options: UsernamePasswordInput,
     @Ctx() { em, req }: MyContext
   ): Promise<UserResponse> {
+    // console.log(req.session, "req.session");
     if (options.username.length <= 2) {
       return {
         errors: [
@@ -91,7 +93,6 @@ export class UserResolver {
       user = result[0];
       // await em.persistAndFlush(user);
     } catch (err) {
-      // console.log(err, "err");
       if (err.code === "23505") {
         // duplicate user name error code
         return {
@@ -103,11 +104,11 @@ export class UserResolver {
           ],
         };
       }
-      // console.log("message: ", err.message);
     }
     // store user id session
     // this will set a cookie on the user
     // keep them logged in
+    // console.log(req.session.userId, "here?");
     req.session.userId = user.id;
 
     return { user };
@@ -140,7 +141,7 @@ export class UserResolver {
         ],
       };
     }
-    console.log(req.session, "req");
+    // console.log(req.session, "req");
     req.session.userId = user.id;
 
     return { user };

@@ -24,10 +24,11 @@ const main = async () => {
   const redisClient = redis.createClient();
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      origin: "http://localhost:7000",
       credentials: true,
     })
   );
+  // console.log(new RedisStore({}), "redis");
   app.use(
     session({
       name: "qid",
@@ -39,7 +40,7 @@ const main = async () => {
         secure: production, //cookie only works in https
       },
       saveUninitialized: false,
-      secret: "seomesecret",
+      secret: "secretsec",
       resave: false,
     })
   );
@@ -49,7 +50,7 @@ const main = async () => {
       resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
-    context: ({ req, res }) => ({ em: orm.em, req, res }),
+    context: ({ req, res }) => ({ em: orm.em, req, res, redis }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
