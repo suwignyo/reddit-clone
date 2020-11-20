@@ -1,18 +1,20 @@
 import {
   Link as ChakraLink,
-  Text,
   Code,
   Icon,
   List,
   ListIcon,
   ListItem,
 } from "@chakra-ui/core";
-import { DarkModeSwitch, NavBar } from "../components";
+import { Box, DarkModeSwitch, Text, NavBar } from "../components";
 
 const Index = () => (
   <div>
     <NavBar></NavBar>
     {/* <DarkModeSwitch /> */}
+    <Box variant="small">
+      <Text>Hello</Text>
+    </Box>
   </div>
 );
 

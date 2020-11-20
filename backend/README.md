@@ -42,3 +42,9 @@ up to @3:10:01
 - navbar
 
 up to @3:26:01
+
+- graphql cache
+- had to use an older version for URQL as dependencies clash'
+- fragments
+
+up to @3:39:41
